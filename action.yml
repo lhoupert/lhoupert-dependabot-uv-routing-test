@@ -52,7 +52,7 @@ runs:
     # No `python-version` here: it sets UV_PYTHON for the rest of the caller's job, overriding
     # their project's Python. The audit step passes --python instead.
     - name: Set up uv
-      uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+      uses: astral-sh/setup-uv@1db35dd8eee11c5894872e0b383ae6c406cf738d # v10.4.0
 
     # Dependencies resolve fresh on every run but skip releases younger than the cooldown, the
     # window in which a hijacked PyPI release is usually caught. A flag, not UV_EXCLUDE_NEWER, so
@@ -95,7 +95,7 @@ runs:
     - name: Upload bandit SARIF to Code Scanning
       if: contains(inputs.tools, 'bandit') && hashFiles('results.sarif') != ''
       continue-on-error: true # needs `security-events: write`; the audit result stands without it
-      uses: github/codeql-action/upload-sarif@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+      uses: github/codeql-action/upload-sarif@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
       with:
         sarif_file: ${{ github.workspace }}/results.sarif
         # A job may upload one SARIF per category, so each working_directory gets its own.
