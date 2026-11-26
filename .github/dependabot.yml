@@ -13,9 +13,25 @@ updates:
         patterns: ["*"]
         update-types: [minor, patch] # majors stay separate: they change action.yml for users
 
-  # No entry for the root project: it commits no lock. action.yml resolves its dependencies on
-  # every run with a 7-day cooldown, and the CI security audit checks that resolution on every
-  # push and weekly.
+  # TEST FORK ONLY: root uv entry restored from 87dbc77 to check GitHub's Dependabot
+  # routing fix (support case 4918220). Never upstream this.
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore"
+      include: scope
+    cooldown:
+      default-days: 7
+    allow:
+      - dependency-type: all
+    groups:
+      python:
+        patterns: ["*"]
+      python-security:
+        applies-to: security-updates
+        patterns: ["*"]
 
   # integration-tests/cases/* are fixtures: never update them. The vulnerable ones are pinned
   # on purpose; the clean ones are unpinned and unlocked, so CI audits the latest releases.
